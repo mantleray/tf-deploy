@@ -3,6 +3,14 @@ variable "aws_region" {
   default     = "eu-west-1"
 }
 
+variable "aws_access_key" {
+  description = "access key"
+}
+
+variable "aws_secret_key" {
+  description = "secret key"
+}
+
 # ubuntu-trusty-14.04 (x64)
 #variable "aws_amis" {
 #  description = "AMI to launch"
