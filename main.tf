@@ -5,6 +5,13 @@ provider "aws" {
   secret_key = "${var.aws_secret_key}"
 }
 
+terraform { backend "s3" {
+    bucket = "466386988525-terraform"
+    key    = "tf-state/terraform.tfstate"
+    region = "eu-west-1"
+  }
+}
+
 resource "aws_elb" "web-elb" {
   name = "terraform-example-elb"
 
