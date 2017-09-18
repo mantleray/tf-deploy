@@ -1,11 +1,16 @@
 # Specify the provider and access details
 provider "aws" {
-  region = "${var.aws_region}"
+  region     = "${var.aws_region}"
   access_key = "${var.aws_access_key}"
   secret_key = "${var.aws_secret_key}"
+
+  assume_role {
+    role_arn = "arn:aws:iam::466386988525:role/terraform"
+  }
 }
 
-terraform { backend "s3" {
+terraform {
+  backend "s3" {
     bucket = "466386988525-terraform"
     key    = "tf-state/terraform.tfstate"
     region = "eu-west-1"
@@ -53,6 +58,7 @@ resource "aws_autoscaling_group" "web-asg" {
   name                 = "example-asg-${aws_launch_configuration.web-lc.name}"
   max_size             = "${var.asg_max}"
   min_size             = "${var.asg_min}"
+  min_elb_capacity     = "${var.asg_min}"
   desired_capacity     = "${var.asg_desired}"
   force_delete         = true
   launch_configuration = "${aws_launch_configuration.web-lc.name}"
